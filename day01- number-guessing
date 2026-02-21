@@ -1,0 +1,21 @@
+#NUMBER GUESSING GAME
+#1. Use random
+#2. Limit attempts
+import random 
+#random to generate random numbers or you can direct import randint and use it 
+print("Guess the number in minimum attempts")
+computer=random.randint(0,100)#generate a random number between 0 to 99
+
+you=int(input("Enter your guess in the range(0,100):"))
+count=0
+while you!=computer:
+#while execute untill value of you is equal to value of computer
+    if you>computer:
+        print("You should guess lower number.")   
+    else:
+        print("You should guess Higher number. ")
+    you=int(input("Enter your guess in the range(0,100):"))
+
+    count+=1 #increment count by 1
+count+=1
+print(f"Your guess is correct that is {computer} in {count} attempts. YOU WIN!")
