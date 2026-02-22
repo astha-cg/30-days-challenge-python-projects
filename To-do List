@@ -1,0 +1,74 @@
+#create a to-do list
+#1. adding task
+#2. editing task
+#3. Deleting task
+#4. View task
+#5. Exit
+while True:
+    print("\n===== TO DO MENU =====")
+    print("1. Add Task")
+    print("2. Edit Task")
+    print("3. Delete Task")
+    print("4. View Tasks")
+    print("5. Exit")
+
+    option = int(input("Select an option: "))
+
+    # ADD TASK
+    if option == 1:
+        task = input("Enter task: ")
+        with open("task.txt", "a") as f:
+            f.write(task + "\n")
+        print("Task added successfully!")
+
+    # EDIT TASK
+    elif option == 2:
+        with open("task.txt", "r") as f:
+            tasks = f.readlines()
+
+        for i, task in enumerate(tasks):
+            print(f"{i+1}. {task.strip()}")
+
+        task_no = int(input("Enter task number to edit: "))
+        new_task = input("Enter new task: ")
+
+        tasks[task_no - 1] = new_task + "\n"
+
+        with open("task.txt", "w") as f:
+            f.writelines(tasks)
+
+        print("Task edited successfully!")
+
+    # DELETE TASK
+    elif option == 3:
+        with open("task.txt", "r") as f:
+            tasks = f.readlines()
+
+        for i, task in enumerate(tasks):
+            print(f"{i+1}. {task.strip()}")
+
+        task_no = int(input("Enter task number to delete: "))
+
+        tasks.pop(task_no - 1)
+
+        with open("task.txt", "w") as f:
+            f.writelines(tasks)
+
+        print("Task deleted successfully!")
+
+    # VIEW TASKS
+    elif option == 4:
+        with open("task.txt", "r") as f:
+            tasks = f.readlines()
+
+        print("\nYour Tasks:")
+        for i, task in enumerate(tasks):
+            print(f"{i+1}. {task.strip()}")
+
+    # EXIT
+    elif option == 5:
+        print("Exiting... Goodbye!")
+        break
+
+    else:
+        print("Invalid option!")
