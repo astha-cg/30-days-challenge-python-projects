@@ -1,0 +1,72 @@
+# Python: Calculator (CLI)
+# Add, subtract, multiply, divide
+# Use functions
+# Define a class named calculator
+class calculator:
+    # Constructor method to initialize values of a and b
+
+    def __init__(self,a,b):
+        self.a=a # First number
+        self.b=b # Second number
+    # Method to perform subtraction
+    def sub(self):
+        print(f"Subtraction of a and b: a-b={self.a-self.b}")
+    # Method to perform multiplication
+    def mul(self):
+        print(f"Multiplication of a and b: a*b={self.a*self.b}")
+    # Method to perform division
+    def div(self):
+        print(f"Division of a and b: a/b={self.a/self.b}")
+    # Method to perform addition
+    def add(self):
+        print(f"Addition of a and b: a+b={self.a+self.b}")
+
+# Variable to control loop (1 = continue, 0 = stop)
+again=1
+# Display calculator menu
+print("--------select the operation you want to perform---------")
+print("******CALCULATOR*******")
+
+print("1. Addition")
+print("2. Subtraction")
+print("3. Multiplication")
+print("4. Division")
+
+# Loop runs until user enters 0
+while again==1:
+
+    # Take user choice
+    operation=int(input("Enter you choice(1/2/3/4):"))
+
+    # Take input values
+    a=int(input("Enter your first value:"))
+    b=int(input("Enter your second value:"))
+    # Create calculator object
+    opr=calculator(a,b)
+
+    # Perform operation based on user choice
+    if operation==1:
+        print(opr.add())
+
+    elif operation==2:
+        print(opr.sub())
+
+    elif operation==3:
+        print(opr.mul())
+
+    elif operation==4:
+        print(opr.div())
+
+    else:
+        print("Something is wrong!")
+    # Ask user if they want to continue
+    again=int(input("Do you want to calculate again(0/1):"))
+
+# Exit message
+if again!=1:
+    print("Thanks for using Calculator!")
+    print("Goodbye 👋")
+    
+
+
+
