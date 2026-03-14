@@ -1,0 +1,19 @@
+import qrcode
+from PIL import Image
+
+
+print("=======LINK TO QR CONVERTOR==========")
+
+code=input("Enter the link here:")#input your link 
+
+qr=qrcode.QRCode(version=1, error_correction= qrcode.constants.ERROR_CORRECT_H, box_size= 10, border= 4, )#control version, error correction, box size and boder
+
+qr.add_data(f"{code}")# adding data 
+
+qr.make(fit=True)
+
+img=qr.make_image(fill_color="black", back_color="white")#changes the color of qrcode
+file_name=input("Enter your file name:")
+img.save(f"{file_name}.png")#you can give your choose of file name
+
+print("QR Code is successfully created")
