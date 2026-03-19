@@ -1,0 +1,18 @@
+email=input("Enter user email:")
+
+if "@" in email:
+    username,domain = email.split('@') #split is used for string manipulation
+
+    if "." in domain:
+        domain_name, extension = domain.split(".")
+
+        print("Username :", username)
+        print("Domain Name:", domain_name)
+        print("Extension:", extension)
+    else:
+        print("Invalid domain format")
+else:
+    print("Invalid email format")
+
+    
+
