@@ -3,8 +3,11 @@ email=input("Enter user email:")
 if "@" in email:
     username,domain = email.split('@') #split is used for string manipulation
 
-    if "." in domain:
-        domain_name, extension = domain.split(".")
+    domain_parts = domain.split(".")
+
+    if len(domain_parts) >= 2:
+        domain_name = domain_parts[0]
+        extension = ".".join(domain_parts[1:]) #join is used to join two string
 
         print("Username :", username)
         print("Domain Name:", domain_name)
