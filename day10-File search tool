@@ -1,0 +1,33 @@
+import os
+
+def search_file(filename, search_path, extension=None):
+    found_files = []
+
+    for root, dirs, files in os.walk(search_path):
+        for file in files:
+            if filename.lower() in file.lower():
+                if extension:
+                    if file.endswith(extension):
+                        found_files.append(os.path.join(root, file))
+                else:
+                    found_files.append(os.path.join(root, file))
+
+    return found_files
+
+
+# 🔹 User Input
+file_name = input("Enter file name: ")
+path = input("Enter directory path: ")
+ext = input("Enter file extension (optional, e.g., .pdf): ")
+
+ext = ext if ext else None
+
+results = search_file(file_name, path, ext)
+
+# 🔹 Output
+if results:
+    print("\nFound files:")
+    for file in results:
+        print(file)
+else:
+    print("\nNo file found!")
