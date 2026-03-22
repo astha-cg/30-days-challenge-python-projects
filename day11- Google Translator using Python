@@ -1,0 +1,92 @@
+# Import required libraries
+from tkinter import *                 # For GUI
+from tkinter import ttk              # For styled widgets (Combobox)
+from googletrans import Translator, LANGUAGES  # For translation
+
+# ---------------- TRANSLATION FUNCTION ----------------
+def change(text="type", src="English", dest="Hindi"):
+    # Store inputs
+    text1 = text
+    src1 = src
+    dest1 = dest
+    
+    # Create translator object
+    trans = Translator()
+    
+    # Translate text
+    trans1 = trans.translate(text1, src=src1, dest=dest1)
+    
+    # Return translated text
+    return trans1.text
+
+
+# ---------------- BUTTON FUNCTION ----------------
+def data():
+    # Get selected source language
+    s = comb_sor.get()
+    
+    # Get selected destination language
+    d = comb_dest.get()
+    
+    # Get text from source textbox
+    masg = Sor_txt.get(1.0, END)
+    
+    # Call translation function
+    textget = change(text=masg, src=s, dest=d)
+    
+    # Clear destination textbox
+    dest_txt.delete(1.0, END)
+    
+    # Insert translated text
+    dest_txt.insert(END, textget)
+
+
+# ---------------- GUI SETUP ----------------
+root = Tk()
+root.title("Translator")          # Window title
+root.geometry("500x700")          # Window size
+root.config(bg='Blue')            # Background color
+
+# Title label
+lab_txt = Label(root, text="Translator", font=("Time New Roman", 40, "bold"))
+lab_txt.place(x=100, y=40, height=50, width=300)
+
+# Frame for bottom elements
+frame = Frame(root)
+frame.pack(side=BOTTOM)
+
+# Source text label
+lab_txt = Label(root, text="Source Text", font=("Time New Roman", 20, "bold"), fg="Black", bg="Blue")
+lab_txt.place(x=100, y=100, height=20, width=300)
+
+# Source text box
+Sor_txt = Text(frame, font=("Time New Roman", 20, "bold"), wrap=WORD)
+Sor_txt.place(x=10, y=130, height=150, width=480)
+
+# Get list of languages from LANGUAGES dictionary
+list_text = list(LANGUAGES.values())
+
+# Source language dropdown
+comb_sor = ttk.Combobox(frame, values=list_text)
+comb_sor.place(x=10, y=300, height=40, width=100)
+comb_sor.set("english")   # Default value
+
+# Translate button
+button_change = Button(frame, text="Translate", relief=RAISED, command=data)
+button_change.place(x=170, y=300, height=40, width=150)
+
+# Destination language dropdown
+comb_dest = ttk.Combobox(frame, values=list_text)
+comb_dest.place(x=330, y=300, height=40, width=150)
+comb_dest.set("english")  # Default value
+
+# Destination label (you accidentally repeated "Source Text" earlier)
+lab_txt = Label(root, text="Translated Text", font=("Time New Roman", 20, "bold"), fg="Black", bg="Blue")
+lab_txt.place(x=100, y=360, height=20, width=300)
+
+# Destination text box
+dest_txt = Text(frame, font=("Time New Roman", 20, "bold"), wrap=WORD)
+dest_txt.place(x=10, y=400, height=150, width=480)
+
+# Run the application
+root.mainloop()
