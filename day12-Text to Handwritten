@@ -1,0 +1,18 @@
+from PIL import Image, ImageDraw, ImageFont
+
+txt = "Hello, this is handwriting style text!"
+
+img = Image.new('RGB', (800, 300), color=(255, 255, 255))
+draw = ImageDraw.Draw(img)
+
+# Safe fallback
+try:
+    font = ImageFont.truetype("c:/Python/chapter 2/Tomatoes-O8L8.ttf", 24)
+except:
+    font = ImageFont.load_default()
+
+draw.text((10, 50), txt, fill=(0, 0, 138), font=font)
+
+img.save("demo1.png")
+
+print("END")
