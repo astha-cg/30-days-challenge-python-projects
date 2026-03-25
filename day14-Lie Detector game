@@ -1,0 +1,79 @@
+import tkinter as tk
+import random
+import time
+
+questions = [
+    "Did you complete your work today?",
+    "Are you telling the truth?",
+    "Did you ever lie to your best friend?",
+    "Do you like coding?"
+]
+
+current_question = 0
+score = 0
+start_time = 0
+
+def next_question():
+    global current_question, start_time
+
+    if current_question < len(questions):
+        question_label.config(text=questions[current_question])
+        result_label.config(text="")
+        answer_entry.delete(0, tk.END)
+        start_time = time.time()
+    else:
+        question_label.config(text="Game Over 🎮")
+        result_label.config(text=f"Final Score: {score}")
+
+def check_answer():
+    global current_question, score
+
+    end_time = time.time()
+    response_time = end_time - start_time
+
+    if response_time > 10:
+        result = "🤥 LIE DETECTED!"
+        score -= 1
+    else:
+        result = random.choice(["😇 Truth", "🤥 Lie"])
+        if result == "😇 Truth":
+            score += 1
+        else:
+            score -= 1
+
+    result_label.config(text=result)
+    current_question += 1
+
+root = tk.Tk()
+root.title("😈 Lie Detector Game")
+root.geometry("400x300")
+
+title = tk.Label(root, text="Lie Detector Game", font=("Arial", 16))
+title.pack(pady=10)
+
+question_label = tk.Label(root, text="", font=("Arial", 12), wraplength=350)
+question_label.pack(pady=10)
+
+answer_entry = tk.Entry(root, font=("Arial", 12))
+answer_entry.pack(pady=5)
+
+submit_btn = tk.Button(root, text="Submit Answer", command=check_answer)
+submit_btn.pack(pady=5)
+
+next_btn = tk.Button(root, text="Next Question", command=next_question)
+next_btn.pack(pady=5)
+
+result_label = tk.Label(root, text="", font=("Arial", 12))
+result_label.pack(pady=10)
+
+score_label = tk.Label(root, text="Score: 0", font=("Arial", 12))
+score_label.pack()
+
+def update_score():
+    score_label.config(text=f"Score: {score}")
+    root.after(500, update_score)
+
+update_score()
+next_question()
+
+root.mainloop()
