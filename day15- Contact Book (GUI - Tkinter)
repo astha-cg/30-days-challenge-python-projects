@@ -1,0 +1,98 @@
+import tkinter as tk
+from tkinter import messagebox
+import json
+
+
+contacts = {}
+
+def load_contacts():
+    global contacts
+    try:
+        with open("contacts.json", "r") as f:
+            contacts = json.load(f)
+    except:
+        contacts = {}
+
+def add_contact():
+    name = name_entry.get()
+    phone = phone_entry.get()
+
+    if name and phone:
+        contacts[name] = phone
+        messagebox.showinfo("Success", "Contact Added!")
+        clear_fields()
+        view_contacts()
+    else:
+        messagebox.showwarning("Error", "Please fill all fields")
+
+def view_contacts():
+    listbox.delete(0, tk.END)
+    for name, phone in contacts.items():
+        listbox.insert(tk.END, f"{name} : {phone}")
+
+def delete_contact():
+    selected = listbox.get(tk.ACTIVE)
+    if selected:
+        name = selected.split(" : ")[0]
+        del contacts[name]
+        view_contacts()
+        messagebox.showinfo("Deleted", "Contact Removed!")
+    else:
+        messagebox.showwarning("Error", "Select a contact")
+
+def update_contact():
+    selected = listbox.get(tk.ACTIVE)
+    if selected:
+        name = selected.split(" : ")[0]
+        new_phone = phone_entry.get()
+        if new_phone:
+            contacts[name] = new_phone
+            view_contacts()
+            messagebox.showinfo("Updated", "Contact Updated!")
+        else:
+            messagebox.showwarning("Error", "Enter new phone number")
+    else:
+        messagebox.showwarning("Error", "Select a contact")
+
+def save_contacts():
+    with open("contacts.json", "w") as f:
+        json.dump(contacts, f)
+
+
+def select_contact(event):
+    selected = listbox.get(tk.ACTIVE)
+    if selected:
+        name, phone = selected.split(" : ")
+        name_entry.delete(0, tk.END)
+        name_entry.insert(0, name)
+        phone_entry.delete(0, tk.END)
+        phone_entry.insert(0, phone)
+
+def clear_fields():
+    name_entry.delete(0, tk.END)
+    phone_entry.delete(0, tk.END)
+
+# GUI Setup
+root = tk.Tk()
+root.title("📒 Contact Book")
+root.geometry("400x400")
+
+tk.Label(root, text="Name").pack()
+name_entry = tk.Entry(root)
+name_entry.pack()
+
+tk.Label(root, text="Phone").pack()
+phone_entry = tk.Entry(root)
+phone_entry.pack()
+
+tk.Button(root, text="Add Contact", command=add_contact).pack(pady=5)
+tk.Button(root, text="Update Contact", command=update_contact).pack(pady=5)
+tk.Button(root, text="Delete Contact", command=delete_contact).pack(pady=5)
+
+listbox = tk.Listbox(root)
+listbox.pack(fill=tk.BOTH, expand=True)
+listbox.bind("<<ListboxSelect>>", select_contact)
+
+tk.Button(root, text="Refresh List", command=view_contacts).pack(pady=5)
+
+root.mainloop()
