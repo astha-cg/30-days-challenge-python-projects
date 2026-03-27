@@ -1,0 +1,67 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Questions (Question, Options, Correct Answer)
+quiz_data = [
+    ("What is the capital of India?", ["Delhi", "Mumbai", "Kolkata", "Chennai"], "Delhi"),
+    ("Which language is used for web apps?", ["Python", "Java", "HTML", "C++"], "HTML"),
+    ("What is 5 + 3?", ["5", "8", "10", "6"], "8"),
+    ("Which is a database?", ["MySQL", "Python", "HTML", "CSS"], "MySQL")
+]
+
+current_q = 0
+score = 0
+
+def load_question():
+    question, options, _ = quiz_data[current_q]
+    question_label.config(text=question)
+
+    var.set(None)
+    for i, option in enumerate(options):
+        radio_buttons[i].config(text=option, value=option)
+
+def next_question():
+    global current_q, score
+
+    selected = var.get()
+    if selected == "":
+        messagebox.showwarning("Warning", "Please select an option")
+        return
+
+    _, _, correct = quiz_data[current_q]
+    if selected == correct:
+        score += 1
+
+    current_q += 1
+
+    if current_q < len(quiz_data):
+        load_question()
+    else:
+        show_result()
+
+def show_result():
+    messagebox.showinfo("Result", f"Your Score: {score}/{len(quiz_data)}")
+    root.quit()
+
+# GUI Setup
+root = tk.Tk()
+root.title("🧠 Quiz App")
+root.geometry("400x300")
+
+question_label = tk.Label(root, text="", font=("Arial", 14), wraplength=350)
+question_label.pack(pady=20)
+
+var = tk.StringVar()
+
+radio_buttons = []
+for i in range(4):
+    rb = tk.Radiobutton(root, text="", variable=var, value="", font=("Arial", 12))
+    rb.pack(anchor="w")
+    radio_buttons.append(rb)
+
+next_btn = tk.Button(root, text="Next", command=next_question)
+next_btn.pack(pady=20)
+
+load_question()
+
+root.mainloop()
