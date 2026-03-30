@@ -1,0 +1,32 @@
+import PyPDF2
+
+#Extract ext from PDF
+def extract_text(file_path):
+    text = ""
+    with open(file_path,"rb") as file:
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            text += page.extract_text()
+    return text.lower()
+
+#Calculate match score
+def match_score(resume_text,job_desc):
+    resume_words=set(resume_text.split())
+    job_words = set(job_desc.lower().split())
+
+    matched = resume_words.intersection(job_words)
+    score = len(matched) / len(job_words) * 100
+
+    return score, matched
+
+#Input
+resume_path = input("Enter resume file path: ")
+job_description = input("Enter job description: ")
+
+resume_text = extract_text(resume_path)
+
+score, matched_keywords = match_score(resume_text, job_description)
+
+#Output
+print(f"\nMatch Score: {score:.2f}%")
+print("Matched Keywords:", matched_keywords)
