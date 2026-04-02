@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main container */
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 450px;
+}
+
+/* Heading */
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input box */
+input {
+    width: 90%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+input:focus {
+    border-color: #667eea;
+}
+
+/* Button */
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #764ba2;
+}
+
+/* Message text */
+p {
+    margin-top: 20px;
+    color: green;
+    font-weight: bold;
+}

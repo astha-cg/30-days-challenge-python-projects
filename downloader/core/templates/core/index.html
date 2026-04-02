@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Django Downloader</title>
+    <link rel="stylesheet" href="static\css\style.css">
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Video Downloader</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="url" placeholder="Enter video URL">
+            <button type="submit">Download</button>
+        </form>
+
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
