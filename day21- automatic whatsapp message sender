@@ -1,0 +1,2 @@
+import pywhatkit as pyw
+pyw.sendwhatmsg('+917024027882','welcome home',20,41)# pyw.sendwhatmsg(number,message,hours, minute)
