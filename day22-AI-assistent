@@ -1,0 +1,73 @@
+import pyttsx3
+import speech_recognition as sr
+import webbrowser
+import datetime
+import pyjokes
+import os
+import time
+
+def sptext():
+    recongnizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        recongnizer.adjust_for_ambient_noise(source)
+        audio = recongnizer.listen(source)
+        try:
+            print("recongnizing...")
+            data=recongnizer.recognize_google(audio)
+            print(data)
+            return data
+        except sr.UnknownValueError:
+            print("Sorry, I did not understand that.")
+            
+def speechtx(x):
+    engine = pyttsx3.init()
+    voice = engine.getProperty('voices')
+    engine.setProperty('voice', voice[1].id)
+    rate = engine.getProperty('rate')
+    engine.setProperty('rate', 150)
+    engine.say(x)
+    engine.runAndWait()
+
+if __name__ == "__main__":
+
+
+    if "hey jarvis" in sptext().lower() or "ok jarvis" in sptext().lower():
+        while True:
+            data1=sptext().lower()
+
+            if "your name" in data1:
+                name= "my name is jarvis"
+                speechtx(name)
+            elif "time" in data1:
+                time = datetime.datetime.now().strftime("%I%M%p")
+                speechtx("the time is " + time)
+            elif "date" in data1:
+                date = datetime.datetime.now().strftime("%Y-%m-%d")
+                speechtx("the date is " + date)
+            elif "open google" in data1:
+                speechtx("opening google")
+                webbrowser.open("https://www.google.com")
+            elif "open youtube" in data1:
+                speechtx("opening youtube")
+                webbrowser.open("https://www.youtube.com")
+            elif "joke" in data1:
+                joke = pyjokes.get_joke(language="en", category="neutral")
+                speechtx(joke)
+            elif "old" in data1:
+                age = "I am one year old"
+                speechtx(age)
+            elif 'play song' in data1:
+                add = "C:\\Users\\HP\\Music\\song.mp3"
+                listsong = os.listdir(add)
+                print(listsong)
+                speechtx("playing song")
+                os.startfile(os.path.join(add, listsong[0]))
+
+            elif "bye" in data1:
+                speechtx("good bye")
+                break
+            time.sleep(5)        
+    else:
+        print("thanks")
+
